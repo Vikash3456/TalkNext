@@ -19,7 +19,7 @@ While the current version is for college students, the long-term vision is to re
 - 👤 First-time-only profile setup (username + bio)  
 - 🔊 Real-time voice chat using WebRTC  
 - 🔄 Shuffle button to switch conversation partner  
-- 📊 Admin panel to detect misuse (AI-based misword detection)  
+- 📊 Admin panel to detect misuse (AI-based misword detection)      
 - ⏳ Call timer and basic profile display  
 - 🚪 Logout button with session time tracking  
 
