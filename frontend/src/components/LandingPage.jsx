@@ -1,4 +1,7 @@
-export default function LandingPage({ onGetStarted }) {
+import { useNavigate } from 'react-router-dom'
+
+export default function LandingPage() {
+  const navigate = useNavigate()
   const scrollToFeatures = () => {
     document.querySelector('#features').scrollIntoView({ behavior: 'smooth' })
   }
@@ -9,7 +12,7 @@ export default function LandingPage({ onGetStarted }) {
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">TalkNext</h1>
           <button
-            onClick={onGetStarted}
+            onClick={() => navigate('/auth')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
           >
             Sign In
@@ -29,7 +32,7 @@ export default function LandingPage({ onGetStarted }) {
             </p>
             <div className="space-x-4">
               <button
-                onClick={onGetStarted}
+                onClick={() => navigate('/auth')}
                 className="bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-3 rounded-full"
               >
                 Get Started

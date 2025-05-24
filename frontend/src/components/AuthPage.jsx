@@ -1,17 +1,19 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AuthPage({ onLogin }) {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Demo credentials check
-    if (email === 'demo@college.edu' && password === 'demo123') {
-      onLogin({ email, username: 'Demo User' })
+    const redirectPath = onLogin({ email, password })
+    if (redirectPath) {
+      navigate(redirectPath)
     } else {
-      setError('Invalid credentials. Use demo@college.edu / demo123')
+      setError('Invalid credentials')
     }
   }
 
