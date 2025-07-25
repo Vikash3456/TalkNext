@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import LandingPage from './components/LandingPage'
@@ -9,7 +9,18 @@ import ProfileSetup from './components/ProfileSetup'
 import { users, admins } from './utils/Local_Storage'
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('talknext_user')
+    return stored ? JSON.parse(stored) : null
+  })
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('talknext_user', JSON.stringify(user))
+    } else {
+      localStorage.removeItem('talknext_user')
+    }
+  }, [user])
 
   const handleLogin = (credentials) => {
     // Check admin credentials
@@ -44,7 +55,7 @@ function App() {
         />
         <Route 
           path="/auth" 
-          element={<AuthPage onLogin={handleLogin} />} 
+          element={<AuthPage onLogin={handleLogin} setUser={setUser} />} 
         />
         <Route 
           path="/profile-setup" 

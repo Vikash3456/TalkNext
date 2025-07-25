@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-
+import { RiUserVoiceLine } from 'react-icons/ri'
 export default function LandingPage() {
   const navigate = useNavigate()
   const scrollToFeatures = () => {
@@ -9,15 +9,20 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
       <nav className="p-4 fixed w-full bg-gray-900/80 backdrop-blur-sm">
-        <div className="container mx-auto flex justify-between items-center">
+       <div className='flex justify-between '>
+              <div className="container mx-auto  flex justify-start items-center">
+          <RiUserVoiceLine className="w-8 h-8 mr-2 text-blue-400" />  
           <h1 className="text-3xl font-bold text-white">TalkNext</h1>
+      </div>
+        <div className="container mx-auto flex justify-end items-center">
           <button
             onClick={() => navigate('/auth')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2  rounded-full"
           >
             Sign In
           </button>
         </div>
+       </div>
       </nav>
 
       <main className="container mx-auto px-4">

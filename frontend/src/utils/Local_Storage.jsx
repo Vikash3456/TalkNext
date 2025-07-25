@@ -21,7 +21,7 @@ export const admins = [
       "email": "user1@college.edu",
       "password": "User@123",
       "role": "user",
-      "firstTime": true
+      "firstTime": false 
     },
     {
       "email": "user2@college.edu",

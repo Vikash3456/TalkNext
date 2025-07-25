@@ -1,24 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { users } from '../utils/Local_Storage'
-
 export default function ProfileSetup({ user, setUser }) {
   const navigate = useNavigate()
   const [bio, setBio] = useState('')
   const [username, setUsername] = useState('')
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    // If user already has a username and bio, redirect to main
+    if (user && user.username && user.bio) {
+      navigate('/main')
+    }
+  }, [user, navigate])
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    if (user.firstTime) {
-      // Only update the firstTime status and add profile info
+    setError('')
+    try {
+      await setDoc(doc(db, 'users', user.uid), {
+        bio,
+        username,
+        email: user.email,
+      })
       setUser(prev => ({
         ...prev,
         bio,
         username,
-        firstTime: false  // Mark as not first time anymore
       }))
-      navigate('/main')  // Redirect to main page
+      navigate('/main')
+    } catch (err) {
+      setError('Failed to save profile. Please try again.')
     }
   }
 
@@ -53,6 +64,7 @@ export default function ProfileSetup({ user, setUser }) {
             Complete Setup
           </button>
         </form>
+        {error && <div className="text-red-500 mt-2">{error}</div>}
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 # 🧠 TalkNext: Idea Summary
 
-TalkNext is a real-time, voice-based web app designed for verified college students to connect anonymously and have meaningful conversations. The platform aims to reduce student loneliness, improve communication skills, and encourage free expression without fear of judgment — all through one-on-one random voice chats.
+TalkNext is a real-time, voice-based web app designed for verified college students to connect anonymously and have meaningful conversations. The platform aims to reduce student loneliness, improve communication skills, and encourage free expression without fear of judgment — all through one-on-one random voice call.
 
 ---
 
@@ -175,43 +175,78 @@ While the current focus is on college students, TalkNext aims to expand to other
 ## 📁 File Structure
 
 ```
-TalkNext/
-├── frontend/                     # Frontend React application
-│   ├── public/
-│   │   ├── assets/
-│   │   └── index.html
-│   ├── src/
-│   │   ├── components/        # Reusable UI components
-│   │   │   ├── auth/
-│   │   │   ├── call/
-│   │   │   ├── profile/
-│   │   │   └── shared/
-│   │   ├── context/          # React context providers
-│   │   ├── hooks/            # Custom hooks
-│   │   ├── pages/            # Route components
-│   │   ├── services/         # API calls & WebRTC
-│   │   ├── utils/            # Helper functions
-│   │   └── App.tsx
-│   └── package.json
-│
-├── backend/                    # Backend Node.js/Express
-│   ├── src/
-│   │   ├── controllers/      # Route controllers
-│   │   ├── middleware/       # Express middleware
-│   │   ├── models/          # MongoDB schemas
-│   │   ├── routes/          # API routes
-│   │   ├── services/        # Business logic
-│   │   ├── utils/           # Helper functions
-│   │   └── app.ts
-│   └── package.json
-│
-├── Docs/                     # Documentation
-│   ├── context.md
+frontend/
+├── public/
+│   ├── assets/
+│   └── index.html
+├── src/
+│   ├── components/
+│   │   ├── AuthPage.jsx
+│   │   ├── LandingPage.jsx
+│   │   ├── MainPage.jsx
+│   │   ├── ProfileSetup.jsx
+│   │   ├── AdminDashboard.jsx
+│   │   └── call/
+│   │       └── VoiceCallUI.jsx
+│   ├── utils/
+│   │   └── Local_Storage.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── index.css
+│   └── App.css
+├── package.json
+├── vite.config.js
+└── ...
+
+backend/
+├── src/
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── userController.js
+│   │   ├── callController.js
+│   │   ├── reportController.js
+│   │   └── adminController.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   ├── rateLimiter.js
+│   │   ├── validation.js
+│   │   └── errorHandler.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Call.js
+│   │   └── Report.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── users.js
+│   │   ├── calls.js
+│   │   ├── reports.js
+│   │   └── admin.js
+│   ├── services/
+│   │   ├── webrtcService.js
+│   │   ├── emailService.js
+│   │   ├── notificationService.js
+│   │   └── aiService.js
+│   ├── utils/
+│   │   ├── database.js
+│   │   ├── jwt.js
+│   │   ├── validation.js
+│   │   └── helpers.js
+│   ├── config/
+│   │   ├── database.js
+│   │   ├── cors.js
+│   │   └── environment.js
+│   └── app.js
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── docs/
 │   ├── api.md
-│   └── setup.md
-│
-└── docker-compose.yml        # Container configuration
-```
+│   └── deployment.md
+├── package.json
+├── .env.example
+├── .gitignore
+└── server.js
 
 ## 🔐 Security & Scaling Notes
 

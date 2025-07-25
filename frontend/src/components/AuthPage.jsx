@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { users, admins } from '../utils/Local_Storage'
+import { GoogleLogin } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
-export default function AuthPage({ onLogin }) {
+
+
+export default function AuthPage({ onLogin, setUser }) {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -9,11 +14,16 @@ export default function AuthPage({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const redirectPath = onLogin({ email, password })
-    if (redirectPath) {
-      navigate(redirectPath)
+    setError('')
+    if (!onLogin) {
+      setError('Login handler not provided')
+      return
+    }
+    const path = onLogin({ email, password })
+    if (path) {
+      navigate(path)
     } else {
-      setError('Invalid credentials')
+      setError('Invalid email or password')
     }
   }
 
@@ -79,9 +89,39 @@ export default function AuthPage({ onLogin }) {
               </svg>
             </button>
           </form>
-
-          <div className="mt-6 text-center text-sm text-gray-400">
-            Demo credentials: demo@college.edu / demo123
+          {/* Google Login Button */}
+          <div className="mt-6 flex flex-col items-center">
+            <GoogleLogin
+              onSuccess={credentialResponse => {
+                let email = '';
+                if (credentialResponse.credential) {
+                  const decoded = jwtDecode(credentialResponse.credential);
+                  email = decoded.email || '';
+                }
+                // Fallback for old logic
+                if (!email && credentialResponse.email) {
+                  email = credentialResponse.email;
+                }
+                const existingUser = users.find(u => u.email === email);
+                const isFirstTime = existingUser ? existingUser.firstTime : true;
+                setUser({
+                  username: email ? email.split('@')[0] : 'Google User',
+                  bio: email || 'Signed in with Google',
+                  picture: '',
+                  role: 'user',
+                  firstTime: isFirstTime
+                });
+                if (isFirstTime) {
+                  navigate('/profile-setup');
+                } else {
+                  navigate('/main');
+                }
+              }}
+              onError={() => {
+                setError('Google Login Failed');
+              }}
+              width="100%"
+            />
           </div>
         </div>
       </div>
